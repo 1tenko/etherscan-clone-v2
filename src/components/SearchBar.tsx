@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import TxDetails from './TxDetails';
-import * as dotenv from 'dotenv';
+import Web3 from 'web3';
 
 const SearchBar = () => {
   const QUICKNODE_API_KEY_URL = process.env.REACT_APP_QUICKNODE_API_KEY_URL;
   const [hash, setHash] = useState('');
+  const web3 = new Web3(`${QUICKNODE_API_KEY_URL}`);
 
-  const handleSubmit = (e: any) => {
+  const [isTransaction, setIsTransaction] = useState(false);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(hash);
+    try {
+      await web3.eth.getTransaction(hash);
+      setIsTransaction(true);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <>
       <div className="text-base"></div>
-      <h2 className="p-2 font-bold text-lg">Ethereum Blockchain Explorer</h2>
+      <h2 className="font-bold text-lg">Ethereum Blockchain Explorer</h2>
       <form onSubmit={handleSubmit} className="flex">
         <input
           type="text"
@@ -27,7 +35,7 @@ const SearchBar = () => {
           Search
         </button>
       </form>
-      <TxDetails nodeKey={QUICKNODE_API_KEY_URL} hash={hash} />
+      {isTransaction && <TxDetails web3={web3} hash={hash} />}
     </>
   );
 };
