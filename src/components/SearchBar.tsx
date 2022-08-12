@@ -16,6 +16,7 @@ const SearchBar = () => {
       setIsTransaction(true);
     } catch (err) {
       console.error(err);
+      setIsTransaction(false);
     }
   };
 

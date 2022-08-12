@@ -14,6 +14,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
   const [txValue, setTxValue] = useState('');
   const [txGasPrice, setTxGasPrice] = useState('');
   const [txFee, setTxFee] = useState('');
+  const [txTimestamp, setTxTimetamp] = useState('');
 
   const getTransaction = async () => {
     const res = await web3.eth.getTransaction(hash);
@@ -26,7 +27,13 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
     setTxFee(
       web3.utils.fromWei((res.gas * parseInt(res.gasPrice)).toString(), 'ether')
     );
-    // const block = await web3.eth.getBlock(res.blockNumber);
+
+    // @ts-ignore
+    const block = await web3.eth.getBlock(txBlock);
+    const blockTimestamp = block.timestamp;
+    // @ts-ignore
+    const timestamp = new Date(parseInt(blockTimestamp) * 1000);
+    setTxTimetamp(timestamp.toUTCString());
   };
   useEffect(() => {
     getTransaction();
@@ -38,6 +45,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
       <div>
         <div>Transaction Hash: {hash}</div>
         <div>Block: {txBlock}</div>
+        <div>Timestamp: {txTimestamp}</div>
         <br />
         <div>From: {txFrom}</div>
         <div>To: {txTo}</div>
