@@ -13,6 +13,9 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
   const [blockMiner, setBlockMiner] = useState('');
   const [difficulty, setDifficulty] = useState<number>();
   const [totalDifficulty, setTotalDifficulty] = useState<number>();
+  const [blockSize, setBlockSize] = useState<number>();
+  const [gasUsed, setGasUsed] = useState<number>();
+  const [gasLimit, setGasLimit] = useState<number>();
 
   const getBlock = async () => {
     const res = await web3.eth.getBlock(input);
@@ -22,6 +25,9 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
     setBlockMiner(res.miner);
     setDifficulty(Number(res.difficulty));
     setTotalDifficulty(Number(res.totalDifficulty));
+    setBlockSize(res.size);
+    setGasUsed(res.gasUsed);
+    setGasLimit(res.gasLimit);
 
     const blockTimestamp = res.timestamp;
     // @ts-ignore
@@ -50,13 +56,29 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Difficulty: </div>{' '}
+          <div className="w-[10vw]">Difficulty: </div>
           {difficulty?.toLocaleString('en-US')}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Total Difficulty: </div>{' '}
+          <div className="w-[10vw]">Total Difficulty: </div>
           {totalDifficulty?.toLocaleString('en-US')}
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Size: </div>
+          {blockSize?.toLocaleString('en-US')} bytes
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Gas Used: </div>
+          {gasUsed?.toLocaleString('en-US')} {/* @ts-ignore */}(
+          {((gasUsed / gasLimit) * 100).toFixed(2)}% of gas limit)
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Gas Limit: </div>
+          {gasLimit?.toLocaleString('en-US')}
         </div>
       </div>
     </div>
