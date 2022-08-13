@@ -8,17 +8,19 @@ interface TxDetailsProps {
 }
 
 const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
+  const [txHash, setTxHash] = useState('');
   const [txBlock, setTxBlock] = useState<number | null>();
   const [txFrom, setTxFrom] = useState<string | null>();
   const [txTo, setTxTo] = useState<string | null>();
   const [txValue, setTxValue] = useState('');
   const [txGasPrice, setTxGasPrice] = useState('');
   const [txFee, setTxFee] = useState('');
-  const [txTimestamp, setTxTimetamp] = useState('');
+  const [txTimestamp, setTxTimestamp] = useState('');
 
   const getTransaction = async () => {
     const res = await web3.eth.getTransaction(hash);
     // console.log(res);
+    setTxHash(res.hash);
     setTxBlock(res.blockNumber);
     setTxFrom(res.from);
     setTxTo(res.to);
@@ -33,7 +35,8 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
     const blockTimestamp = block.timestamp;
     // @ts-ignore
     const timestamp = new Date(parseInt(blockTimestamp) * 1000);
-    setTxTimetamp(timestamp.toUTCString());
+    setTxTimestamp(timestamp.toUTCString());
+    console.log(res);
   };
   useEffect(() => {
     getTransaction();
@@ -41,19 +44,43 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
 
   return (
     <div>
-      <h2 className="font-bold text-lg">Transaction details</h2>
-      <div>
-        <div>Transaction Hash: {hash}</div>
-        <div>Block: {txBlock}</div>
-        <div>Timestamp: {txTimestamp}</div>
-        <br />
-        <div>From: {txFrom}</div>
-        <div>To: {txTo}</div>
-        <br />
-        <div>Value: {txValue} ETH</div>
-        <div>Transaction Fee: {txFee} ETH</div>
-        <br />
-        <div>Gas Price: {txGasPrice} ETH</div>
+      <h2 className="font-bold text-lg m-4 ml-0">Transaction details</h2>
+      <div className="flex-row gap-5 border-2 border-black p-4">
+        <div className="flex">
+          <div className="w-[10vw]">Transaction Hash:</div>
+          {txHash}
+        </div>
+        <div className="flex">
+          <div className="w-[10vw]">Block:</div>
+          {txBlock}
+        </div>
+        <div className="flex">
+          <div className="w-[10vw]">Timestamp:</div>
+          {txTimestamp}
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">From:</div>
+          {txFrom}
+        </div>
+        <div className="flex">
+          <div className="w-[10vw]">To:</div>
+          {txTo}
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Value:</div>
+          {txValue} ETH
+        </div>
+        <div className="flex">
+          <div className="w-[10vw]">Transaction Fee:</div>
+          {txFee} ETH
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Gas Price:</div>
+          {txGasPrice} ETH
+        </div>
       </div>
     </div>
   );
