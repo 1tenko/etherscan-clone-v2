@@ -16,10 +16,11 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
   const [blockSize, setBlockSize] = useState<number>();
   const [gasUsed, setGasUsed] = useState<number>();
   const [gasLimit, setGasLimit] = useState<number>();
+  const [baseFeePerGas, setBaseFeePerGas] = useState('');
 
   const getBlock = async () => {
     const res = await web3.eth.getBlock(input);
-    console.log(res);
+    // console.log(res);
     setBlockNum(res.number);
     setBlockTxLength(res.transactions.length);
     setBlockMiner(res.miner);
@@ -28,6 +29,10 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
     setBlockSize(res.size);
     setGasUsed(res.gasUsed);
     setGasLimit(res.gasLimit);
+    setBaseFeePerGas(
+      // @ts-ignore
+      web3.utils.fromWei(res.baseFeePerGas?.toString(), 'ether')
+    );
 
     const blockTimestamp = res.timestamp;
     // @ts-ignore
@@ -79,6 +84,11 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
         <div className="flex">
           <div className="w-[10vw]">Gas Limit: </div>
           {gasLimit?.toLocaleString('en-US')}
+        </div>
+        <hr className="my-4" />
+        <div className="flex">
+          <div className="w-[10vw]">Base Fee Per Gas: </div>
+          {baseFeePerGas} ETH
         </div>
       </div>
     </div>

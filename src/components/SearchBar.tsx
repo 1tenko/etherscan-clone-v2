@@ -43,7 +43,8 @@ const SearchBar = () => {
         </form>
       </div>
       {isTransaction && <TxDetails web3={web3} hash={input} />}
-      <BlockDetails web3={web3} input={input} />
+
+      {isBlock && <BlockDetails web3={web3} input={input} />}
     </>
   );
 };
