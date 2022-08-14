@@ -16,7 +16,6 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const [transaction, setTransaction] = useState<Transaction | null>();
 
   const [blockConfirmations, setBlockConfirmations] = useState<number>();
-
   const [txFee, setTxFee] = useState('');
   const [txTimestamp, setTxTimestamp] = useState('');
 
@@ -29,18 +28,16 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   };
 
   const getTransaction = async () => {
-    console.log('fetching transaction');
     const res = await web3.eth.getTransaction(web3.utils.toHex(id!));
-    console.log('transaction fetched');
+
     // console.log(res);
     setTransaction(res);
 
     setTxFee(
       web3.utils.fromWei((res.gas * parseInt(res.gasPrice)).toString(), 'ether')
     );
-    console.log('fetching block');
+
     const block = await web3.eth.getBlock(res.blockNumber!);
-    console.log('fetched block');
     const currentBlock = await web3.eth.getBlockNumber();
     setBlockConfirmations(currentBlock - res.blockNumber!);
 

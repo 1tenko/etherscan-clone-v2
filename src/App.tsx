@@ -15,17 +15,18 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(web3.utils.isHex(input));
 
-    if (!web3.utils.isHex(input)) {
+    if (!web3.utils.isHexStrict(input)) {
       const blockNum = Number(input);
       const res = await web3.eth.getBlock(blockNum);
 
       if (!res) {
-        navigate('block');
+        navigate('/block');
       } else {
         navigate(`/block/${blockNum}`);
       }
-    } else if (web3.utils.isHex(input)) {
+    } else if (web3.utils.isHexStrict(input)) {
       try {
         await web3.eth.getTransaction(input);
         navigate(`/tx/${input}`);
