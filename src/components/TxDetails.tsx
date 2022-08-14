@@ -1,43 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
+import { Transaction } from 'web3-eth';
 
 interface TxDetailsProps {
   web3: Web3;
 }
 
+// TODO: CREATE INTERFACE FOR TRANSACTION AND OVERRIDE VALUE TYPES FOR PARSING
+// interface TransactionDetails extends Transaction {
+
+// }
+
 const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
-  const [txHash, setTxHash] = useState('');
-  const [txBlock, setTxBlock] = useState<number | null>();
+  const [transaction, setTransaction] = useState<Transaction | null>();
+
   const [blockConfirmations, setBlockConfirmations] = useState<number>();
-  const [txFrom, setTxFrom] = useState<string | null>();
-  const [txTo, setTxTo] = useState<string | null>();
-  const [txValue, setTxValue] = useState('');
-  const [txGasPrice, setTxGasPrice] = useState('');
+
   const [txFee, setTxFee] = useState('');
   const [txTimestamp, setTxTimestamp] = useState('');
 
   const { id } = useParams();
 
+  const parseEther = (v: string): string => {
+    // console.log(v);
+
+    return web3.utils.fromWei(v, 'ether');
+  };
+
   const getTransaction = async () => {
+    console.log('fetching transaction');
     const res = await web3.eth.getTransaction(web3.utils.toHex(id!));
-
+    console.log('transaction fetched');
     // console.log(res);
-    setTxHash(res.hash);
-    setTxBlock(res.blockNumber);
+    setTransaction(res);
 
-    setTxFrom(res.from);
-    setTxTo(res.to);
-    setTxValue(web3.utils.fromWei(res.value, 'ether'));
-    setTxGasPrice(web3.utils.fromWei(res.gasPrice, 'ether'));
     setTxFee(
       web3.utils.fromWei((res.gas * parseInt(res.gasPrice)).toString(), 'ether')
     );
-    console.log('123');
+    console.log('fetching block');
     const block = await web3.eth.getBlock(res.blockNumber!);
+    console.log('fetched block');
     const currentBlock = await web3.eth.getBlockNumber();
-    console.log('345');
-    setBlockConfirmations(currentBlock - txBlock!);
+    setBlockConfirmations(currentBlock - res.blockNumber!);
 
     const blockTimestamp = block.timestamp;
     // @ts-ignore
@@ -47,7 +52,8 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
 
   useEffect(() => {
     getTransaction();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
@@ -55,11 +61,11 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
       <div className="flex-row gap-5 border-2 border-black p-4">
         <div className="flex">
           <div className="w-[10vw]">Transaction Hash:</div>
-          {txHash}
+          {transaction?.hash}
         </div>
         <div className="flex">
           <div className="w-[10vw]">Block:</div>
-          <div>{txBlock}</div>
+          <div>{transaction?.blockNumber}</div>
           <div className="bg-gray-200 ml-4">
             {blockConfirmations} block confirmations
           </div>
@@ -71,16 +77,16 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">From:</div>
-          {txFrom}
+          {transaction?.from}
         </div>
         <div className="flex">
           <div className="w-[10vw]">To:</div>
-          {txTo}
+          {transaction?.to}
         </div>
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">Value:</div>
-          {txValue} ETH
+          {transaction?.value && parseEther(transaction?.value!)} ETH
         </div>
         <div className="flex">
           <div className="w-[10vw]">Transaction Fee:</div>
@@ -89,7 +95,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">Gas Price:</div>
-          {txGasPrice} ETH
+          {transaction?.gasPrice && parseEther(transaction?.gasPrice!)} ETH
         </div>
       </div>
     </div>

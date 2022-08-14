@@ -1,4 +1,4 @@
-import React, { FormEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import TxDetails from './components/TxDetails';
 import Web3 from 'web3';
 import BlockDetails from './components/BlockDetails';
@@ -12,10 +12,6 @@ function App() {
   const web3 = new Web3(`${QUICKNODE_API_KEY_URL}`);
 
   const navigate = useNavigate();
-
-  const containsAnyLetter = (str: string) => {
-    return /[a-zA-Z]/.test(str);
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
