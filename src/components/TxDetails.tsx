@@ -22,8 +22,6 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const { id } = useParams();
 
   const parseEther = (v: string): string => {
-    // console.log(v);
-
     return web3.utils.fromWei(v, 'ether');
   };
 

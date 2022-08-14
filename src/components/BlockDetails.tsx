@@ -10,15 +10,7 @@ interface BlockDetailsProps {
 const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
   const [block, setBlock] = useState<BlockTransactionString>();
 
-  const [blockNum, setBlockNum] = useState<number>();
   const [blockTimestamp, setBlockTimestamp] = useState('');
-  const [blockTxLength, setBlockTxLength] = useState<number>();
-  const [blockMiner, setBlockMiner] = useState('');
-  const [difficulty, setDifficulty] = useState<number>();
-  const [totalDifficulty, setTotalDifficulty] = useState<number>();
-  const [blockSize, setBlockSize] = useState<number>();
-  const [gasUsed, setGasUsed] = useState<number>();
-  const [gasLimit, setGasLimit] = useState<number>();
   const [baseFeePerGas, setBaseFeePerGas] = useState('');
 
   const { id } = useParams();
@@ -28,14 +20,6 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
 
     setBlock(res);
 
-    setBlockNum(res.number);
-    setBlockTxLength(res.transactions.length);
-    setBlockMiner(res.miner);
-    setDifficulty(Number(res.difficulty));
-    setTotalDifficulty(Number(res.totalDifficulty));
-    setBlockSize(res.size);
-    setGasUsed(res.gasUsed);
-    setGasLimit(res.gasLimit);
     if (!res.baseFeePerGas) {
       setBaseFeePerGas('Unavailable');
     } else {
@@ -59,50 +43,50 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
       <h2 className="font-bold text-lg m-4 ml-0">Block Details</h2>
       <div className="flex-row gap-5 border-2 border-black p-4">
         <div className="flex">
-          <div className="w-[10vw]">Block Number: </div> {block?.number}
+          <div className="w-[15vw]">Block Number: </div> {block?.number}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Timestamp: </div> {blockTimestamp}
+          <div className="w-[15vw]">Timestamp: </div> {blockTimestamp}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Transactions: </div>{' '}
+          <div className="w-[15vw]">Transactions: </div>
           {block?.transactions.length}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Mined by: </div> {blockMiner}
+          <div className="w-[15vw]">Mined by: </div> {block?.miner}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Difficulty: </div>
-          {difficulty?.toLocaleString('en-US')}
+          <div className="w-[15vw]">Difficulty: </div>
+          {Number(block?.difficulty).toLocaleString('en-US')}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Total Difficulty: </div>
-          {totalDifficulty?.toLocaleString('en-US')}
+          <div className="w-[15vw]">Total Difficulty: </div>
+          {Number(block?.totalDifficulty).toLocaleString('en-US')}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Size: </div>
-          {blockSize?.toLocaleString('en-US')} bytes
+          <div className="w-[15vw]">Size: </div>
+          {Number(block?.size).toLocaleString('en-US')} bytes
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Gas Used: </div>
-          {gasUsed?.toLocaleString('en-US')} {/* @ts-ignore */}(
-          {((gasUsed / gasLimit) * 100).toFixed(2)}% of gas limit)
+          <div className="w-[15vw]">Gas Used: </div>
+          {block?.gasUsed.toLocaleString('en-US')} {/* @ts-ignore */}(
+          {((block?.gasUsed / block?.gasLimit) * 100).toFixed(2)}% of gas limit)
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Gas Limit: </div>
-          {gasLimit?.toLocaleString('en-US')}
+          <div className="w-[15vw]">Gas Limit: </div>
+          {block?.gasLimit?.toLocaleString('en-US')}
         </div>
         <hr className="my-4" />
         <div className="flex">
-          <div className="w-[10vw]">Base Fee Per Gas: </div>
+          <div className="w-[15vw]">Base Fee Per Gas: </div>
           {baseFeePerGas}
         </div>
       </div>
