@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 
@@ -31,7 +31,7 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
     setGasUsed(res.gasUsed);
     setGasLimit(res.gasLimit);
     if (!res.baseFeePerGas) {
-      setBaseFeePerGas('unavailable');
+      setBaseFeePerGas('Unavailable');
     } else {
       setBaseFeePerGas(
         web3.utils.fromWei(String(res.baseFeePerGas), 'ether') + ' ETH'
@@ -43,7 +43,11 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
     const timestamp = new Date(parseInt(blockTimestamp) * 1000);
     setBlockTimestamp(timestamp.toUTCString());
   };
-  getBlock();
+
+  useEffect(() => {
+    getBlock();
+  });
+
   return (
     <div>
       <h2 className="font-bold text-lg m-4 ml-0">Block Details</h2>

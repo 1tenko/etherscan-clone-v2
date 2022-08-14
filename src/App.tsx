@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEventHandler, useState } from 'react';
 import TxDetails from './components/TxDetails';
 import Web3 from 'web3';
 import BlockDetails from './components/BlockDetails';
@@ -11,27 +11,25 @@ function App() {
   const [input, setInput] = useState('');
   const web3 = new Web3(`${QUICKNODE_API_KEY_URL}`);
 
-  // const [isTransaction, setIsTransaction] = useState(false);
-  // const [isBlock, setIsBlock] = useState(false);
-
   const navigate = useNavigate();
 
   const containsAnyLetter = (str: string) => {
     return /[a-zA-Z]/.test(str);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!containsAnyLetter(input)) {
+    if (!web3.utils.isHex(input)) {
       const blockNum = Number(input);
       const res = await web3.eth.getBlock(blockNum);
+
       if (!res) {
         navigate('block');
       } else {
         navigate(`/block/${blockNum}`);
       }
-    } else if (containsAnyLetter(input)) {
+    } else if (web3.utils.isHex(input)) {
       try {
         await web3.eth.getTransaction(input);
         navigate(`/tx/${input}`);
@@ -40,6 +38,7 @@ function App() {
       }
     }
   };
+
   return (
     <>
       <div className="flex justify-center">

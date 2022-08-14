@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 
 interface TxDetailsProps {
-  // nodeKey: string | undefined;
   web3: Web3;
 }
 
@@ -21,7 +20,8 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const { id } = useParams();
 
   const getTransaction = async () => {
-    const res = await web3.eth.getTransaction(id!);
+    const res = await web3.eth.getTransaction(web3.utils.toHex(id!));
+
     // console.log(res);
     setTxHash(res.hash);
     setTxBlock(res.blockNumber);
@@ -33,9 +33,10 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     setTxFee(
       web3.utils.fromWei((res.gas * parseInt(res.gasPrice)).toString(), 'ether')
     );
-
-    const block = await web3.eth.getBlock(txBlock!);
+    console.log('123');
+    const block = await web3.eth.getBlock(res.blockNumber!);
     const currentBlock = await web3.eth.getBlockNumber();
+    console.log('345');
     setBlockConfirmations(currentBlock - txBlock!);
 
     const blockTimestamp = block.timestamp;
@@ -43,6 +44,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     const timestamp = new Date(parseInt(blockTimestamp) * 1000);
     setTxTimestamp(timestamp.toUTCString());
   };
+
   useEffect(() => {
     getTransaction();
   });
