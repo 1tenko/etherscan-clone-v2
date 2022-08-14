@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TxDetails from './TxDetails';
 import Web3 from 'web3';
 import BlockDetails from './BlockDetails';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './Home';
 import ErrorPage from './ErrorPage';
 
@@ -16,26 +16,36 @@ const SearchBar = () => {
 
   const navigate = useNavigate();
 
+  const containsAnyLetter = (str: string) => {
+    return /[a-zA-Z]/.test(str);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      await web3.eth.getTransaction(input);
-      navigate(`/tx/${input}`);
-      // setIsTransaction(true);
-    } catch (err) {
-      try {
-        await web3.eth.getBlock(input);
+
+    if (!containsAnyLetter(input)) {
+      const res = await web3.eth.getBlock(input);
+      if (!res) {
+        navigate('block');
+      } else {
         navigate(`/block/${input}`);
-        // setIsBlock(true);
-        // setIsTransaction(false);
-      } catch (err) {}
+      }
+    } else if (containsAnyLetter(input)) {
+      try {
+        await web3.eth.getTransaction(input);
+        navigate(`/tx/${input}`);
+      } catch {
+        navigate('/tx');
+      }
     }
   };
 
   return (
     <>
       <div className="m-4 ml-0">
-        <h2 className="font-bold text-lg">Ethereum Blockchain Explorer</h2>
+        <h2 className="font-bold text-lg">
+          <Link to="/">Ethereum Blockchain Explorer</Link>
+        </h2>
         <form onSubmit={handleSubmit} className="flex">
           <input
             type="text"
@@ -60,9 +70,6 @@ const SearchBar = () => {
           </Route>
         </Routes>
       </div>
-      {/* {isTransaction && <TxDetails web3={web3} hash={input} />}
-
-      {isBlock && <BlockDetails web3={web3} input={input} />} */}
     </>
   );
 };

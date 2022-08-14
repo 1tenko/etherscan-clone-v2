@@ -18,10 +18,10 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
   const [gasLimit, setGasLimit] = useState<number>();
   const [baseFeePerGas, setBaseFeePerGas] = useState('');
 
-  const { id } = useParams();
+  let { id } = useParams();
 
   const getBlock = async () => {
-    const res = await web3.eth.getBlock(id!);
+    const res = await web3.eth.getBlock(String(id!));
     // console.log(res);
     setBlockNum(res.number);
     setBlockTxLength(res.transactions.length);
@@ -31,10 +31,7 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
     setBlockSize(res.size);
     setGasUsed(res.gasUsed);
     setGasLimit(res.gasLimit);
-    setBaseFeePerGas(
-      // @ts-ignore
-      web3.utils.fromWei(res.baseFeePerGas?.toString(), 'ether')
-    );
+    setBaseFeePerGas(web3.utils.fromWei(String(res.baseFeePerGas!), 'ether'));
 
     const blockTimestamp = res.timestamp;
     // @ts-ignore
