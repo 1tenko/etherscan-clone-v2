@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 
 interface TxDetailsProps {
-  hash: string;
   // nodeKey: string | undefined;
   web3: Web3;
 }
 
-const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
+const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const [txHash, setTxHash] = useState('');
   const [txBlock, setTxBlock] = useState<number | null>();
   const [blockConfirmations, setBlockConfirmations] = useState<number>();
@@ -18,8 +18,10 @@ const TxDetails: React.FC<TxDetailsProps> = ({ hash, web3 }) => {
   const [txFee, setTxFee] = useState('');
   const [txTimestamp, setTxTimestamp] = useState('');
 
+  const { id } = useParams();
+
   const getTransaction = async () => {
-    const res = await web3.eth.getTransaction(hash);
+    const res = await web3.eth.getTransaction(id!);
     // console.log(res);
     setTxHash(res.hash);
     setTxBlock(res.blockNumber);

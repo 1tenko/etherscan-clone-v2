@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 
 interface BlockDetailsProps {
   web3: Web3;
-  input: string;
 }
 
-const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
+const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
   const [blockNum, setBlockNum] = useState<number>();
   const [blockTimestamp, setBlockTimestamp] = useState('');
   const [blockTxLength, setBlockTxLength] = useState<number>();
@@ -18,8 +18,10 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3, input }) => {
   const [gasLimit, setGasLimit] = useState<number>();
   const [baseFeePerGas, setBaseFeePerGas] = useState('');
 
+  const { id } = useParams();
+
   const getBlock = async () => {
-    const res = await web3.eth.getBlock(input);
+    const res = await web3.eth.getBlock(id!);
     // console.log(res);
     setBlockNum(res.number);
     setBlockTxLength(res.transactions.length);

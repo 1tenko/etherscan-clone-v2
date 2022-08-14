@@ -2,25 +2,32 @@ import React, { useState } from 'react';
 import TxDetails from './TxDetails';
 import Web3 from 'web3';
 import BlockDetails from './BlockDetails';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Home from './Home';
+import ErrorPage from './ErrorPage';
 
 const SearchBar = () => {
   const QUICKNODE_API_KEY_URL = process.env.REACT_APP_QUICKNODE_API_KEY_URL;
   const [input, setInput] = useState('');
   const web3 = new Web3(`${QUICKNODE_API_KEY_URL}`);
 
-  const [isTransaction, setIsTransaction] = useState(false);
-  const [isBlock, setIsBlock] = useState(false);
+  // const [isTransaction, setIsTransaction] = useState(false);
+  // const [isBlock, setIsBlock] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       await web3.eth.getTransaction(input);
-      setIsTransaction(true);
+      navigate(`/tx/${input}`);
+      // setIsTransaction(true);
     } catch (err) {
       try {
         await web3.eth.getBlock(input);
-        setIsBlock(true);
-        setIsTransaction(false);
+        navigate(`/block/${input}`);
+        // setIsBlock(true);
+        // setIsTransaction(false);
       } catch (err) {}
     }
   };
@@ -41,10 +48,21 @@ const SearchBar = () => {
             Search
           </button>
         </form>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tx">
+            <Route index element={<ErrorPage />} />
+            <Route path="/tx/:id" element={<TxDetails web3={web3} />} />
+          </Route>
+          <Route path="/block">
+            <Route index element={<ErrorPage />} />
+            <Route path="/block/:id" element={<BlockDetails web3={web3} />} />
+          </Route>
+        </Routes>
       </div>
-      {isTransaction && <TxDetails web3={web3} hash={input} />}
+      {/* {isTransaction && <TxDetails web3={web3} hash={input} />}
 
-      {isBlock && <BlockDetails web3={web3} input={input} />}
+      {isBlock && <BlockDetails web3={web3} input={input} />} */}
     </>
   );
 };
