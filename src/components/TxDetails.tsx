@@ -42,7 +42,6 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     // @ts-ignore
     const timestamp = new Date(parseInt(blockTimestamp) * 1000);
     setTxTimestamp(timestamp.toUTCString());
-    console.log(res);
   };
   useEffect(() => {
     getTransaction();
