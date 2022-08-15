@@ -6,6 +6,7 @@ import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './components/Home';
 import ErrorPage from './components/ErrorPage';
 import AddressDetails from './components/AddressDetails';
+import Nav from './components/Nav';
 
 function App() {
   const QUICKNODE_API_KEY_URL = process.env.REACT_APP_QUICKNODE_API_KEY_URL;
@@ -19,12 +20,15 @@ function App() {
 
     if (!web3.utils.isHexStrict(input)) {
       const blockNum = Number(input);
-      const res = await web3.eth.getBlock(blockNum);
-
-      if (!res) {
+      try {
+        const res = await web3.eth.getBlock(blockNum);
+        if (!res) {
+          navigate('/block');
+        } else {
+          navigate(`/block/${blockNum}`);
+        }
+      } catch {
         navigate('/block');
-      } else {
-        navigate(`/block/${blockNum}`);
       }
     } else if (web3.utils.isHexStrict(input)) {
       try {
@@ -44,7 +48,8 @@ function App() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-[60vw] flex-row">
+        <div className="w-[70vw] flex-row">
+          <Nav />
           <div className="m-4 ml-0">
             <h2 className="font-bold text-lg">
               <Link to="/">Ethereum Blockchain Explorer</Link>
