@@ -5,6 +5,7 @@ import BlockDetails from './components/BlockDetails';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './components/Home';
 import ErrorPage from './components/ErrorPage';
+import AddressDetails from './components/AddressDetails';
 
 function App() {
   const QUICKNODE_API_KEY_URL = process.env.REACT_APP_QUICKNODE_API_KEY_URL;
@@ -15,7 +16,6 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(web3.utils.isHex(input));
 
     if (!web3.utils.isHexStrict(input)) {
       const blockNum = Number(input);
@@ -31,7 +31,12 @@ function App() {
         await web3.eth.getTransaction(input);
         navigate(`/tx/${input}`);
       } catch {
-        navigate('/tx');
+        const address = await web3.eth.getBalance(input);
+        if (address) {
+          navigate(`/address/${input}`);
+        } else {
+          navigate('/address');
+        }
       }
     }
   };
@@ -67,6 +72,13 @@ function App() {
                 <Route
                   path="/block/:id"
                   element={<BlockDetails web3={web3} />}
+                />
+              </Route>
+              <Route path="/address">
+                <Route index element={<ErrorPage />} />
+                <Route
+                  path="/address/:id"
+                  element={<AddressDetails web3={web3} />}
                 />
               </Route>
             </Routes>
