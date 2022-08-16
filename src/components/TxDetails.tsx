@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 import { Transaction } from 'web3-eth';
+import { getEthPrice } from '../utils/getEthPrice';
 
 interface TxDetailsProps {
   web3: Web3;
@@ -14,6 +15,13 @@ interface TxDetailsProps {
 
 const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const [transaction, setTransaction] = useState<Transaction | null>();
+
+  const [ethPrice, setEthPrice] = useState<number>();
+
+  const EthPriceFetch = async () => {
+    const res = await getEthPrice();
+    setEthPrice(res);
+  };
 
   const [blockConfirmations, setBlockConfirmations] = useState<number>();
   const [txFee, setTxFee] = useState('');
@@ -47,6 +55,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
 
   useEffect(() => {
     getTransaction();
+    EthPriceFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -81,11 +90,13 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">Value:</div>
-          {transaction?.value && parseEther(transaction?.value!)} ETH
+          {transaction?.value && parseEther(transaction?.value!)} ETH (
+          {(ethPrice! * Number(parseEther(transaction?.value!))).toFixed(2)}{' '}
+          USD)
         </div>
         <div className="flex">
           <div className="w-[10vw]">Transaction Fee:</div>
-          {txFee} ETH
+          {txFee} ETH ({(ethPrice! * Number(txFee)).toFixed(2)} USD)
         </div>
         <hr className="my-4" />
         <div className="flex">
