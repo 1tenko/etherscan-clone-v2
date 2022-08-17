@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Web3 from 'web3';
 import { Transaction } from 'web3-eth';
 import { getEthPrice } from '../utils/getEthPrice';
@@ -58,6 +58,8 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
   const value = (ethPrice! * Number(parseEther(txnValue))).toFixed(2);
   const txFeeValue = (ethPrice! * Number(txFee)).toFixed(2);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getTransaction();
     EthPriceFetch();
@@ -86,11 +88,21 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">From:</div>
-          {transaction?.from}
+          <div
+            onClick={() => navigate(`/address/${transaction?.from}`)}
+            className="cursor-pointer"
+          >
+            {transaction?.from}
+          </div>
         </div>
         <div className="flex">
           <div className="w-[10vw]">To:</div>
-          {transaction?.to}
+          <div
+            onClick={() => navigate(`/address/${transaction?.to}`)}
+            className="cursor-pointer"
+          >
+            {transaction?.to}
+          </div>
         </div>
         <hr className="my-4" />
         <div className="flex">
