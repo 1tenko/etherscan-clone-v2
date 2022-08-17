@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 import { BlockTransactionString } from 'web3-eth';
+import Search from './Search';
 
 interface BlockDetailsProps {
   web3: Web3;
@@ -40,6 +41,7 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
 
   return (
     <div>
+      <Search web3={web3} />
       <h2 className="font-bold text-lg m-4 ml-0">Block Details</h2>
       <div className="flex-row gap-5 border-2 border-black p-4">
         <div className="flex">

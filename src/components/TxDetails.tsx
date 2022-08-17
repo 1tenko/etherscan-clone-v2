@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Web3 from 'web3';
 import { Transaction } from 'web3-eth';
 import { getEthPrice } from '../utils/getEthPrice';
+import Search from './Search';
 
 interface TxDetailsProps {
   web3: Web3;
@@ -68,6 +69,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
 
   return (
     <div>
+      <Search web3={web3} />
       <h2 className="font-bold text-lg m-4 ml-0">Transaction Details</h2>
       <div className="flex-row gap-5 border-2 border-black p-4">
         <div className="flex">

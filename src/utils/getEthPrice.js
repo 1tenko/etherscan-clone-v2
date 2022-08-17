@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 
-const QUICKNODE_API_KEY_URL = process.env.REACT_APP_QUICKNODE_API_KEY_URL;
-const web3 = new Web3(`${QUICKNODE_API_KEY_URL}`);
+const ALCHEMY_API_KEY_URL = process.env.REACT_APP_ALCHEMY_API_KEY_URL;
+const web3 = new Web3(`${ALCHEMY_API_KEY_URL}`);
 
 export const getEthPrice = async () => {
   const aggregatorV3InterfaceABI = [
