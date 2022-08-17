@@ -17,7 +17,7 @@ const Nav: React.FC = () => {
   return (
     <div className="absolute h-[94px] w-[70vw] flex justify-between border-b-2 p-[8px]">
       <div className="flex items-center font-bold text-[64px] text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">
-        <Link to="/">EBL.</Link>
+        <Link to="/">EBE.</Link>
       </div>
       <div className="flex items-center font-bold">
         Current ETH Price is ${ethPrice}
