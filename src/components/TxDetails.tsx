@@ -23,6 +23,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     setEthPrice(res);
   };
 
+  const [txnValue, setTxnValue] = useState('');
   const [blockConfirmations, setBlockConfirmations] = useState<number>();
   const [txFee, setTxFee] = useState('');
   const [txTimestamp, setTxTimestamp] = useState('');
@@ -43,6 +44,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
       web3.utils.fromWei((res.gas * parseInt(res.gasPrice)).toString(), 'ether')
     );
 
+    setTxnValue(res.value);
     const block = await web3.eth.getBlock(res.blockNumber!);
     const currentBlock = await web3.eth.getBlockNumber();
     setBlockConfirmations(currentBlock - res.blockNumber!);
@@ -52,6 +54,9 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     const timestamp = new Date(parseInt(blockTimestamp) * 1000);
     setTxTimestamp(timestamp.toUTCString());
   };
+
+  const value = (ethPrice! * Number(parseEther(txnValue))).toFixed(2);
+  const txFeeValue = (ethPrice! * Number(txFee)).toFixed(2);
 
   useEffect(() => {
     getTransaction();
@@ -90,13 +95,12 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <hr className="my-4" />
         <div className="flex">
           <div className="w-[10vw]">Value:</div>
-          {transaction?.value && parseEther(transaction?.value!)} ETH (
-          {(ethPrice! * Number(parseEther(transaction?.value!))).toFixed(2)}{' '}
+          {parseEther(txnValue)} ETH ({Number(value).toLocaleString('en-US')}{' '}
           USD)
         </div>
         <div className="flex">
           <div className="w-[10vw]">Transaction Fee:</div>
-          {txFee} ETH ({(ethPrice! * Number(txFee)).toFixed(2)} USD)
+          {txFee} ETH ({Number(txFeeValue).toLocaleString('en-US')} USD)
         </div>
         <hr className="my-4" />
         <div className="flex">
