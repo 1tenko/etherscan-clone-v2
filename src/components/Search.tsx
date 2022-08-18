@@ -47,9 +47,9 @@ const Search: React.FC<SearchProps> = ({ web3 }) => {
           placeholder="Search by Txn Hash / Block / Address"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="p-2 w-[50vw] border-[1px] outline-0 border-gray-400 text-[24px] rounded-l-[16px] shadow-lg"
+          className="p-2 w-[50vw] border-[1px] outline-0 border-gray-500 text-[24px] rounded-l-[16px] shadow-lg"
         />
-        <button className="p-2 font-bold px-[32px] border-[1px] border-l-0 rounded-r-[16px] border-gray-400  bg-gray-400 text-white shadow-xl text-[16px] bg-gradient-to-r hover:from-[#FC466B] hover:to-[#3F5EFB]">
+        <button className="p-2 font-bold px-[32px] border-[1px] border-l-0 rounded-r-[16px] border-gray-500  bg-gray-500 text-white shadow-xl text-[16px] hover:bg-gray-600 ">
           Search
         </button>
       </form>
