@@ -74,7 +74,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
         <h2 className=" text-[24px] text-lg m-[24px] ml-0">
           Transaction Details
         </h2>
-        <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-xl">
+        <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-2xl">
           <div className="flex-row gap-5 p-[24px] rounded-[16px]  bg-gray-200/50  text-[20px]">
             <div className="flex p-[12px]">
               <div className="w-[20vw]">Transaction Hash:</div>
@@ -82,7 +82,10 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
             </div>
             <div className="flex p-[12px]">
               <div className="w-[20vw]">Block:</div>
-              <div>
+              <div
+                onClick={() => navigate(`/block/${transaction?.blockNumber}`)}
+                className="cursor-pointer underline decoration-1 underline-offset-4"
+              >
                 {transaction?.blockNumber} ({blockConfirmations} block
                 confirmations)
               </div>
