@@ -69,57 +69,63 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
 
   return (
     <div>
-      <Search web3={web3} />
-      <h2 className="font-bold text-lg m-4 ml-0">Transaction Details</h2>
-      <div className="flex-row gap-5 border-2 border-black p-4">
-        <div className="flex">
-          <div className="w-[10vw]">Transaction Hash:</div>
-          {transaction?.hash}
-        </div>
-        <div className="flex">
-          <div className="w-[10vw]">Block:</div>
-          <div>{transaction?.blockNumber}</div>
-          <div className="bg-gray-200 ml-4">
-            {blockConfirmations} block confirmations
+      <div className="mt-[128px]">
+        <Search web3={web3} />
+        <h2 className=" text-[24px] text-lg m-[24px] ml-0">
+          Transaction Details
+        </h2>
+        <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-xl">
+          <div className="flex-row gap-5 p-[24px] rounded-[16px]  bg-gray-200/50  text-[20px]">
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Transaction Hash:</div>
+              {transaction?.hash}
+            </div>
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Block:</div>
+              <div>
+                {transaction?.blockNumber} ({blockConfirmations} block
+                confirmations)
+              </div>
+            </div>
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Timestamp:</div>
+              {txTimestamp}
+            </div>
+            <hr className="my-4 border-black" />
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">From:</div>
+              <div
+                onClick={() => navigate(`/address/${transaction?.from}`)}
+                className="cursor-pointer underline decoration-1 underline-offset-4"
+              >
+                {transaction?.from}
+              </div>
+            </div>
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">To:</div>
+              <div
+                onClick={() => navigate(`/address/${transaction?.to}`)}
+                className="cursor-pointer underline decoration-1 underline-offset-4"
+              >
+                {transaction?.to}
+              </div>
+            </div>
+            <hr className="my-4 border-black" />
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Value:</div>
+              {parseEther(txnValue)} ETH (
+              {Number(value).toLocaleString('en-US')} USD)
+            </div>
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Transaction Fee:</div>
+              {txFee} ETH ({Number(txFeeValue).toLocaleString('en-US')} USD)
+            </div>
+            <hr className="my-4 border-black" />
+            <div className="flex p-[12px]">
+              <div className="w-[20vw]">Gas Price:</div>
+              {transaction?.gasPrice && parseEther(transaction?.gasPrice!)} ETH
+            </div>
           </div>
-        </div>
-        <div className="flex">
-          <div className="w-[10vw]">Timestamp:</div>
-          {txTimestamp}
-        </div>
-        <hr className="my-4" />
-        <div className="flex">
-          <div className="w-[10vw]">From:</div>
-          <div
-            onClick={() => navigate(`/address/${transaction?.from}`)}
-            className="cursor-pointer"
-          >
-            {transaction?.from}
-          </div>
-        </div>
-        <div className="flex">
-          <div className="w-[10vw]">To:</div>
-          <div
-            onClick={() => navigate(`/address/${transaction?.to}`)}
-            className="cursor-pointer"
-          >
-            {transaction?.to}
-          </div>
-        </div>
-        <hr className="my-4" />
-        <div className="flex">
-          <div className="w-[10vw]">Value:</div>
-          {parseEther(txnValue)} ETH ({Number(value).toLocaleString('en-US')}{' '}
-          USD)
-        </div>
-        <div className="flex">
-          <div className="w-[10vw]">Transaction Fee:</div>
-          {txFee} ETH ({Number(txFeeValue).toLocaleString('en-US')} USD)
-        </div>
-        <hr className="my-4" />
-        <div className="flex">
-          <div className="w-[10vw]">Gas Price:</div>
-          {transaction?.gasPrice && parseEther(transaction?.gasPrice!)} ETH
         </div>
       </div>
     </div>

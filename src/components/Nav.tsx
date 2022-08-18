@@ -15,7 +15,7 @@ const Nav: React.FC = () => {
   });
 
   return (
-    <div className="bg-gray-300 bg-gradient-to-tr from-gray-300 to-gray-400 fixed w-[100vw] top-0 left-0 border-b-[1px] border-gray-500 shadow-md flex justify-center">
+    <div className="bg-gradient-to-tr from-gray-300 to-gray-400 fixed w-[100vw] top-0 left-0 border-b-[1px] border-gray-500 shadow-md flex justify-center">
       <div className=" h-[94px] w-[70vw] flex justify-between  p-[8px]">
         <div className="flex items-center font-bold text-[64px] text-transparent bg-clip-text bg-gradient-to-r from-[#FC466B] to-[#3F5EFB]">
           <Link to="/">EBE.</Link>

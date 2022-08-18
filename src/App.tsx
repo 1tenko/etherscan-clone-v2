@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="bg-gray-200 bg-gradient-to-r from-gray-200 to-gray-400 flex justify-center h-[100vh]">
-      <div className="w-[70vw] flex-row bg-[url('../public/ethLogo.png')] bg-no-repeat bg-left-bottom bg-[length:auto_640px] mb-[64px] ">
+      <div className="w-[70vw] flex-row bg-[url('../public/ethLogo.png')] bg-no-repeat bg-left-bottom bg-[length:auto_640px] mb-[48px] ">
         <Nav />
         <Routes>
           <Route path="/" element={<Home web3={web3} />} />
