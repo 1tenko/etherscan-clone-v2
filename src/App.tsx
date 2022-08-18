@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TxDetails from './components/TxDetails';
 import Web3 from 'web3';
 import BlockDetails from './components/BlockDetails';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import ErrorPage from './components/ErrorPage';
 import AddressDetails from './components/AddressDetails';
 import Nav from './components/Nav';
-import Search from './components/Search';
+
 // import logo from '/ethLogo.png';
 
 function App() {
