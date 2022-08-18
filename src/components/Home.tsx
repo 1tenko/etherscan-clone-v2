@@ -16,11 +16,15 @@ const Home: React.FC<HomeProps> = ({ web3 }) => {
   // });
 
   return (
-    <div className="h-[100%] flex justify-center items-center">
+    <div className="flex justify-center mt-[192px] ">
       <div className="">
-        <h2 className="font-bold text-[64px] text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">
-          <Link to="/">Ethereum Blockchain Explorer</Link>
-        </h2>
+        <div className="font-bold text-[96px] text-transparent bg-clip-text bg-gradient-to-r from-[#FC466B] to-[#3F5EFB] leading-[96px] pb-[48px] drop-shadow-lg">
+          <Link to="/">
+            <div className="flex justify-start ">Ethereum</div>
+            <div className="flex justify-center underline">Blockchain</div>
+            <div className="flex justify-end underline">Explorer.</div>
+          </Link>
+        </div>
         <Search web3={web3} />
       </div>
     </div>

@@ -15,12 +15,19 @@ const Nav: React.FC = () => {
   });
 
   return (
-    <div className="absolute h-[94px] w-[70vw] flex justify-between border-b-2 p-[8px]">
-      <div className="flex items-center font-bold text-[64px] text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">
-        <Link to="/">EBE.</Link>
-      </div>
-      <div className="flex items-center font-bold">
-        Current ETH Price is ${ethPrice}
+    <div className="bg-gray-300 fixed w-[100vw] top-0 left-0 border-b-[1px] border-gray-400 shadow-md flex justify-center">
+      <div className=" h-[94px] w-[70vw] flex justify-between  p-[8px]">
+        <div className="flex items-center font-bold text-[64px] text-transparent bg-clip-text bg-gradient-to-r from-[#FC466B] to-[#3F5EFB]">
+          <Link to="/">EBE.</Link>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="flex-row items-center border-l-[1px] pl-[32px] border-gray-400">
+            <div className="flex justify-center">ETHER PRICE</div>
+            <div className="flex justify-center  text-[24px]">
+              ${Number(ethPrice?.toFixed(2)).toLocaleString('en-US')}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

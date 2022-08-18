@@ -40,16 +40,16 @@ const Search: React.FC<SearchProps> = ({ web3 }) => {
     }
   };
   return (
-    <div className="mt-[24px]">
+    <div>
       <form onSubmit={handleSubmit} className="flex">
         <input
           type="text"
-          placeholder="Search by Address / Txn Hash / Block"
+          placeholder="Search by Txn Hash / Block / Address"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="p-2 w-[35vw] border-2 border-black"
+          className="p-2 w-[50vw] border-[1px] outline-0 border-gray-400 text-[24px] rounded-l-[16px] shadow-lg"
         />
-        <button className="p-2 font-bold border-2 border-l-0 border-black">
+        <button className="p-2 font-bold px-[32px] border-[1px] border-l-0 rounded-r-[16px] border-gray-400  bg-gray-400 text-white shadow-xl text-[16px] bg-gradient-to-r hover:from-[#FC466B] hover:to-[#3F5EFB]">
           Search
         </button>
       </form>

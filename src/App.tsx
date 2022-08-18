@@ -15,7 +15,7 @@ function App() {
   const web3 = new Web3(`${ALCHEMY_API_KEY_URL}`);
 
   return (
-    <div className="flex justify-center h-[100vh]">
+    <div className="bg-gray-200 flex justify-center h-[100vh]">
       <div className="w-[70vw] flex-row">
         <Nav />
         <Routes>
