@@ -34,30 +34,35 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ web3 }) => {
 
   return (
     <div>
-      <Search web3={web3} />
-      <h2 className="font-bold text-lg m-4 ml-0">Address Details</h2>
-      <div className="flex-row gap-5 border-2 border-black p-4">
-        <div className="font-bold">Overview</div>
-        <hr className="my-4" />
-        <div className="flex">
-          <div className="w-[10vw]"> Balance: </div>
-          {balance} ETH
-        </div>
-        <hr className="my-4" />
-        <div className="flex">
-          <div className="w-[10vw]">Ether Value: </div>
-          {Number(value).toLocaleString('en-US')} USD
-        </div>
-        <hr className="my-4" />
-        <div>
-          for more details about this address,{' '}
-          <a
-            target="_blank"
-            rel="noreferrer noopener"
-            href={`https://debank.com/profile/${id}`}
-          >
-            click here.
-          </a>
+      <div className="mt-[128px]">
+        <Search web3={web3} />
+        <h2 className=" text-[24px] text-lg m-[24px] ml-0">Address Details</h2>
+        <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-2xl">
+          <div className="flex-row gap-5 p-[24px] rounded-[16px]  bg-gray-200/50  text-[20px]">
+            <div className="font-bold">Overview</div>
+            <hr className="my-4 border-black" />
+            <div className="flex p-[12px]">
+              <div className="w-[10vw]"> Balance: </div>
+              {balance} ETH
+            </div>
+            <hr className="my-4 border-black" />
+            <div className="flex p-[12px]">
+              <div className="w-[10vw]">Ether Value: </div>
+              {Number(value).toLocaleString('en-US')} USD
+            </div>
+            <hr className="my-4 border-black" />
+            <div>
+              for more details about this address,{' '}
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                href={`https://debank.com/profile/${id}`}
+                className="cursor-pointer underline decoration-1 underline-offset-4"
+              >
+                click here.
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

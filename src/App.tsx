@@ -22,15 +22,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home web3={web3} />} />
           <Route path="/tx">
-            <Route index element={<ErrorPage />} />
+            <Route index element={<ErrorPage web3={web3} />} />
             <Route path="/tx/:id" element={<TxDetails web3={web3} />} />
           </Route>
           <Route path="/block">
-            <Route index element={<ErrorPage />} />
+            <Route index element={<ErrorPage web3={web3} />} />
             <Route path="/block/:id" element={<BlockDetails web3={web3} />} />
           </Route>
           <Route path="/address">
-            <Route index element={<ErrorPage />} />
+            <Route index element={<ErrorPage web3={web3} />} />
             <Route
               path="/address/:id"
               element={<AddressDetails web3={web3} />}

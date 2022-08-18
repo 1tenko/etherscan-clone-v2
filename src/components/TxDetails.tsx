@@ -71,7 +71,7 @@ const TxDetails: React.FC<TxDetailsProps> = ({ web3 }) => {
     <div>
       <div className="mt-[128px]">
         <Search web3={web3} />
-        <h2 className=" text-[24px] text-lg m-[24px] ml-0">
+        <h2 className=" text-[24px] text-lg m-[24px] ml-0 drop-shadow-md">
           Transaction Details
         </h2>
         <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-2xl">

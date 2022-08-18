@@ -44,7 +44,9 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ web3 }) => {
     <div>
       <div className="mt-[128px]">
         <Search web3={web3} />
-        <h2 className=" text-[24px] text-lg m-[24px] ml-0">Block Details</h2>
+        <h2 className=" text-[24px] text-lg m-[24px] ml-0 drop-shadow-md">
+          Block Details
+        </h2>
         <div className="bg-gradient-to-r p-[4px] from-[#FC466B] to-[#3F5EFB]/50 rounded-[16px] shadow-2xl">
           <div className="flex-row gap-5 p-[24px] rounded-[16px]  bg-gray-200/50  text-[20px]">
             <div className="flex">

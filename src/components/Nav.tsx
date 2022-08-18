@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
           <Link to="/">EBE.</Link>
         </div>
         <div className="flex justify-center items-center">
-          <div className="flex-row items-center border-l-[1px] pl-[48px] border-gray-500">
+          <div className="flex-row items-center border-l-[1px] pl-[48px] border-gray-500 drop-shadow-md">
             <div className="flex justify-center">ETHER PRICE</div>
             <div className="flex justify-center  text-[24px]">
               ${Number(ethPrice?.toFixed(2)).toLocaleString('en-US')}
